@@ -1,0 +1,74 @@
+<!--
+    Simple static Telegram WebApp. Does not verify the WebAppInitData, as a bot token would be needed for that.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>python-telegram-bot Example WebApp</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+
+    <style>
+        body {
+            background: #F5F5F5 0% 0% no-repeat padding-box;
+            opacity: 1;
+            text-align: center;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .title {
+            font: normal normal bold 40px/48px SF Pro;
+            letter-spacing: 0px;
+            color: #27A7E7;
+            opacity: 1;
+        }
+
+        .sub_title {
+            font: normal normal 300 40px/48px SF Pro;
+            letter-spacing: 0px;
+            color: #27A7E7;
+            opacity: 1;
+        }
+    </style>
+</head>
+<script type="text/javascript">
+    let character = '';
+    $(document).ready(function () {
+        $("div").click(function (event) {
+            $('h2').css('color', '#27A7E7');
+            $(this).children('h2').css("color", "red");
+            character = $(this).attr('id');
+            Telegram.WebApp.MainButton.setText('Выбрать персонажа: ' + character);
+            event.preventDefault();
+        });
+    });
+    Telegram.WebApp.ready();
+
+    Telegram.WebApp.MainButton.setText('Выбрать персонажа:').show().onClick(function () {
+        const data = JSON.stringify({character: character});
+        Telegram.WebApp.sendData(data);
+        Telegram.WebApp.close();
+    });
+</script>
+<body style="background-color: #F5F5F5">
+<div id="mario">
+    <img src="img/mario.png" alt="">
+    <h2 class="title">Марио</h2>
+    <h3 class="sub_title">Персонаж</h3>
+</div>
+<div id="einstein">
+    <img src="img/einstein.png" alt="">
+    <h2 class="title">Альберт Эйнштейн</h2>
+    <h3 class="sub_title">Физик-теоретик</h3>
+</div>
+</body>
+<script type="text/javascript">
+    Telegram.WebApp.expand();
+</script>
+</html>
